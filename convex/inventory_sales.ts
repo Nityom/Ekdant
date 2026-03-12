@@ -44,3 +44,20 @@ export const listAll = query({
             .collect();
     },
 });
+
+export const listByDateRange = query({
+    args: {
+        start_date: v.string(),
+        end_date: v.string(),
+    },
+    handler: async (ctx, args) => {
+        const all = await ctx.db
+            .query("inventory_sales")
+            .withIndex("by_sale_date")
+            .order("desc")
+            .collect();
+        return all.filter(
+            (s) => s.sale_date >= args.start_date && s.sale_date <= args.end_date
+        );
+    },
+});

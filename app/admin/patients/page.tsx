@@ -67,7 +67,7 @@ const ViewPatients = () => {
               paid_amount: bill.paid_amount,
               balance_amount: bill.balance_amount,
               payment_status: bill.payment_status,
-              created_at: bill.created_at || bill._creationTime?.toString() || '',
+              created_at: bill.created_at || (bill._creationTime ? new Date(bill._creationTime).toISOString() : '') || '',
             });
             billsByPrescriptionId.set(bill.prescription_id, existing);
           }

@@ -55,12 +55,10 @@ const defaultDentalProcedures = [
   { id: 10, name: 'Braces Consultation', price: 1000 },
 ];
 
-// Function to generate a bill/invoice number
+// Temporary bill number shown before saving; real sequential number is assigned by the server
 const generateBillNumber = () => {
-  const prefix = 'DSC'; // Dantsri Dental Clinic
-  const timestamp = new Date().getTime().toString().slice(-6); // Last 6 digits of timestamp
-  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0'); // 3-digit random number
-  return `${prefix}-${timestamp}-${random}`;
+  const year = new Date().getFullYear();
+  return `KSD-INV-${year}-???`;
 };
 
 interface StockUpdateResult {
@@ -309,6 +307,11 @@ const BillForm: React.FC<BillFormProps> = ({ patientData, diagnosis, selectedTee
 
       setBillSaved(true);
       setSavedBillId(savedBill.id || null);
+
+      // Update billNumber with the server-assigned sequential number
+      if (savedBill.bill_number) {
+        setBillData(prev => ({ ...prev, billNumber: savedBill.bill_number! }));
+      }
       
       // Update form state with saved data
       if (savedBill && Array.isArray(savedBill.items)) {

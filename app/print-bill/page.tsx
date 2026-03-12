@@ -82,7 +82,7 @@ function PrintBillContent() {
         };
 
         setBillData({
-          billNumber: bill._id,
+          billNumber: (bill as any).bill_number || bill._id,
           billDate: formatDate(bill._creationTime),
           patientName: (bill as any).patient_name || 'N/A',
           patientPhone: (bill as any).phone_number || '',

@@ -45,6 +45,7 @@ export default defineSchema({
     prescription_id: v.string(),
     patient_id: v.string(),
     reference_number: v.string(),
+    bill_number: v.optional(v.string()),
     total_amount: v.number(),
     paid_amount: v.number(),
     balance_amount: v.number(),

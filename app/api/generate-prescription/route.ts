@@ -45,20 +45,26 @@ const MARGIN_R = 50;
 const CONTENT_W = PAGE_W - MARGIN_L - MARGIN_R;
 
 function wrapText(text: string, font: PDFFont, size: number, maxW: number): string[] {
-  const words = text.split(' ');
-  const lines: string[] = [];
-  let line = '';
-  for (const word of words) {
-    const test = line ? `${line} ${word}` : word;
-    if (font.widthOfTextAtSize(test, size) <= maxW) {
-      line = test;
-    } else {
-      if (line) lines.push(line);
-      line = word;
+  const paragraphs = text.split('\n');
+  const result: string[] = [];
+  for (const paragraph of paragraphs) {
+    const words = paragraph.split(' ');
+    const lines: string[] = [];
+    let line = '';
+    for (const word of words) {
+      if (!word) continue;
+      const test = line ? `${line} ${word}` : word;
+      if (font.widthOfTextAtSize(test, size) <= maxW) {
+        line = test;
+      } else {
+        if (line) lines.push(line);
+        line = word;
+      }
     }
+    if (line) lines.push(line);
+    result.push(...(lines.length ? lines : ['']));
   }
-  if (line) lines.push(line);
-  return lines.length ? lines : [''];
+  return result.length ? result : [''];
 }
 
 function drawWrappedText(

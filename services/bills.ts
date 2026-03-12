@@ -66,8 +66,10 @@ export const createBill = async (bill: Bill) => {
       notes: bill.notes,
     };
 
-    const newBillId = await convex.mutation(api.bills.create, billData);
-    return { ...bill, id: newBillId } as Bill;
+    const result = await convex.mutation(api.bills.create, billData);
+    const newBillId = result.id;
+    const bill_number = result.bill_number;
+    return { ...bill, id: newBillId, bill_number } as Bill;
   } catch (e) {
     console.error('Exception in createBill:', e);
     throw e;

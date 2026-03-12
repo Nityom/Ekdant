@@ -177,15 +177,15 @@ function PrintPrescriptionContent() {
         .patient-grid {
           width: 100%;
           font-size: 10pt;
-          margin-bottom: 14px;
+          margin-bottom: 8px;
           border-top: 1.5px solid #000;
           border-bottom: 1.5px solid #000;
-          padding: 6px 0;
+          padding: 4px 0;
         }
 
         .patient-grid .row {
           display: flex;
-          line-height: 1.6;
+          line-height: 1.45;
         }
 
         .patient-grid .col {
@@ -205,18 +205,18 @@ function PrintPrescriptionContent() {
 
         /* ── Section Heading ── */
         .sec-heading {
-          font-size: 11pt;
+          font-size: 10.5pt;
           font-weight: bold;
           text-decoration: underline;
-          margin: 12px 0 4px 0;
+          margin: 7px 0 2px 0;
           padding: 0;
         }
 
         /* ── Section Body ── */
         .sec-body {
-          font-size: 10.5pt;
-          line-height: 1.5;
-          margin: 0 0 2px 16px;
+          font-size: 10pt;
+          line-height: 1.35;
+          margin: 0 0 1px 14px;
           white-space: pre-wrap;
           text-align: justify;
         }
@@ -248,7 +248,7 @@ function PrintPrescriptionContent() {
           display: flex;
           justify-content: space-between;
           align-items: flex-end;
-          margin-top: 50px;
+          margin-top: 20px;
           font-size: 10pt;
         }
 
@@ -296,14 +296,6 @@ function PrintPrescriptionContent() {
           )}
         </div>
 
-        {/* ── DIAGNOSIS ── */}
-        {prescriptionData.diagnosis && (
-          <>
-            <p className="sec-heading">DIAGNOSIS</p>
-            <p className="sec-body">{prescriptionData.diagnosis}</p>
-          </>
-        )}
-
         {/* ── CHIEF COMPLAINT ── */}
         {prescriptionData.chief_complaint && (
           <>
@@ -317,6 +309,14 @@ function PrintPrescriptionContent() {
           <>
             <p className="sec-heading">MEDICAL HISTORY</p>
             <p className="sec-body">{prescriptionData.medical_history}</p>
+          </>
+        )}
+
+        {/* ── INVESTIGATION ── */}
+        {prescriptionData.investigation && (
+          <>
+            <p className="sec-heading">INVESTIGATION</p>
+            <p className="sec-body">{prescriptionData.investigation}</p>
           </>
         )}
 
@@ -339,11 +339,11 @@ function PrintPrescriptionContent() {
           </>
         )}
 
-        {/* ── INVESTIGATION ── */}
-        {prescriptionData.investigation && (
+        {/* ── DIAGNOSIS ── */}
+        {prescriptionData.diagnosis && (
           <>
-            <p className="sec-heading">INVESTIGATION</p>
-            <p className="sec-body">{prescriptionData.investigation}</p>
+            <p className="sec-heading">DIAGNOSIS</p>
+            <p className="sec-body">{prescriptionData.diagnosis}</p>
           </>
         )}
 
@@ -356,6 +356,26 @@ function PrintPrescriptionContent() {
                 <div key={index}>{index + 1}. {step}</div>
               ))}
             </div>
+          </>
+        )}
+
+        {/* ── TREATMENT DONE ── */}
+        {prescriptionData.treatment_done && prescriptionData.treatment_done.length > 0 && (
+          <>
+            <p className="sec-heading">TREATMENT DONE</p>
+            <div className="sec-body">
+              {prescriptionData.treatment_done.map((item, index) => (
+                <div key={index}>{index + 1}. {item.description}</div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ── ADVICE / INSTRUCTIONS ── */}
+        {prescriptionData.advice && (
+          <>
+            <p className="sec-heading">ADVICE / INSTRUCTIONS</p>
+            <p className="sec-body">{prescriptionData.advice}</p>
           </>
         )}
 
@@ -383,34 +403,6 @@ function PrintPrescriptionContent() {
                 ))}
               </tbody>
             </table>
-          </>
-        )}
-
-        {/* ── TREATMENT DONE ── */}
-        {prescriptionData.treatment_done && prescriptionData.treatment_done.length > 0 && (
-          <>
-            <p className="sec-heading">TREATMENT DONE</p>
-            <div className="sec-body">
-              {prescriptionData.treatment_done.map((item, index) => (
-                <div key={index}>{index + 1}. {item.description}</div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* ── ADVICE / INSTRUCTIONS ── */}
-        {prescriptionData.advice && (
-          <>
-            <p className="sec-heading">ADVICE / INSTRUCTIONS</p>
-            <p className="sec-body">{prescriptionData.advice}</p>
-          </>
-        )}
-
-        {/* ── FOLLOW-UP ── */}
-        {prescriptionData.followup_date && (
-          <>
-            <p className="sec-heading">NEXT APPOINTMENT</p>
-            <p className="sec-body">{formatDate(prescriptionData.followup_date)}</p>
           </>
         )}
 

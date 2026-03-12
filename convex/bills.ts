@@ -25,10 +25,21 @@ export const create = mutation({
             payment_status = "PAID";
         }
 
+        // Generate sequential bill number: KSD-INV-{YEAR}-{SEQ}
+        const year = new Date().getFullYear();
+        const allBills = await ctx.db.query("bills").collect();
+        const yearPrefix = `KSD-INV-${year}-`;
+        const yearBills = allBills.filter(
+            (b) => typeof b.bill_number === "string" && b.bill_number.startsWith(yearPrefix)
+        );
+        const seq = (yearBills.length + 1).toString().padStart(3, "0");
+        const bill_number = `${yearPrefix}${seq}`;
+
         const newBillId = await ctx.db.insert("bills", {
             prescription_id: args.prescription_id,
             patient_id: args.patient_id,
             reference_number: args.reference_number,
+            bill_number,
             total_amount: args.total_amount,
             paid_amount: args.paid_amount,
             balance_amount,
@@ -38,7 +49,7 @@ export const create = mutation({
             discount_percent: args.discount_percent,
             discount_amount: args.discount_amount,
         });
-        return newBillId;
+        return { id: newBillId, bill_number };
     },
 });
 
