@@ -11,7 +11,7 @@ export const signInWithEmail = async (email: string, password: string) => {
     return { success: true, user: { email, role: "admin" } };
   }
 
-  throw new Error("Invalid credentials. Please use admin@ksdental.com / Admin@123");
+  throw new Error("Invalid credentials. Please try again.");
 };
 
 export const signOut = async () => {
