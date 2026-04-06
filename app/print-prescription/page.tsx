@@ -120,7 +120,7 @@ function PrintPrescriptionContent() {
         @media print {
           @page {
             size: A4 portrait;
-            margin-top: 5cm;
+            margin-top: 4cm;
             margin-bottom: 4cm;
             margin-left: 1.8cm;
             margin-right: 1.8cm;
